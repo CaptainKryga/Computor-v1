@@ -1,0 +1,6 @@
+C:\Users\main\Documents\ComputatorV1\Computator V1\Computator V1\bin\Release\Computator V1.exe.config
+C:\Users\main\Documents\ComputatorV1\Computator V1\Computator V1\bin\Release\Computator V1.exe
+C:\Users\main\Documents\ComputatorV1\Computator V1\Computator V1\bin\Release\Computator V1.pdb
+C:\Users\main\Documents\ComputatorV1\Computator V1\Computator V1\obj\Release\Computator V1.csproj.CoreCompileInputs.cache
+C:\Users\main\Documents\ComputatorV1\Computator V1\Computator V1\obj\Release\Computator V1.exe
+C:\Users\main\Documents\ComputatorV1\Computator V1\Computator V1\obj\Release\Computator V1.pdb
