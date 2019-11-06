@@ -29,16 +29,13 @@ namespace Computator_V1
 
 		public static int GetSign(string str, out int len, out char ch)
 		{
-			int x = 0;
-
-			ch = ' ';
-			x++;
-			if (str[x] == '-' || str[x] == '+' || str[x] == '/' || str[x] == '*' || str[x] == '(' || str[x] == ')')
+			if (str[1] == '-' || str[1] == '+' || str[1] == '/' || str[1] == '*' || str[1] == '(' || str[1] == ')')
 			{
 				len = 2;
-				ch = str[x];
+				ch = str[1];
 				return 1;
 			}
+			ch = ' ';
 			len = 0;
 			return 0;
 		}
