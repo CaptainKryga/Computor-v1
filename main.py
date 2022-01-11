@@ -13,7 +13,7 @@ if __name__ == '__main__':
 						action="store_true")
 	args = parser.parse_args()
 	arr = s_parser(args)
-	if arr[0] == "true":
+	if arr == "true":
 		print(s_algoritm(arr))
 	else:
-		print("error polynomial: ", str(arr[0]))
+		print("error polynomial: ", str(arr))
