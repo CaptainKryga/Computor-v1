@@ -22,7 +22,7 @@ def is_digit(s):
 		if len(s) > 2 and s[1] == '^':
 			if is_digit2(str.split(s, '^')[1]):
 				return True
-	elif s.isdigit():
+	elif is_digit2(s):
 		return True
 	return False
 
@@ -46,6 +46,7 @@ def check_chars(arr):
 # check iterations
 def check_iterations(arr):
 	iter = 0
+	print(arr)
 	for word in arr:
 		if iter == 0 or iter % 2 == 0:
 			if not is_digit(word):
@@ -54,7 +55,7 @@ def check_iterations(arr):
 			return word
 		iter += 1
 
-		return "true"
+	return "true"
 
 
 # check variables
