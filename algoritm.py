@@ -1,4 +1,4 @@
-def s_algoritm(polynomial):
+def f_algoritm(polynomial):
 	print("algoritm\n")
 
 	degree = 1
