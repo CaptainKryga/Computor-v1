@@ -1,6 +1,3 @@
-def get_num(num):
-	return float(num)
-
 def is_digit2(num):
 	check = "0123456789"
 	tchk = True
@@ -24,9 +21,9 @@ def is_digit(s):
 	if s[0] == 'x' or s[0] == 'X':
 		if len(s) > 2 and s[1] == '^':
 			if is_digit2(str.split(s, '^')[1]) and \
-				get_num(str.split(s, '^')[1]) == 0 or \
-				get_num(str.split(s, '^')[1]) == 1 or \
-				get_num(str.split(s, '^')[1]) == 2:
+				float(str.split(s, '^')[1]) == 0 or \
+				float(str.split(s, '^')[1]) == 1 or \
+				float(str.split(s, '^')[1]) == 2:
 				return True
 	elif is_digit2(s):
 		return True
@@ -35,7 +32,7 @@ def is_digit(s):
 
 # check symbols
 def check_chars(arr):
-	check_list = "0123456789+-*/=^ Xx."
+	check_list = "0123456789+-*=^ Xx."
 
 	for c in arr:
 		flag = False
@@ -52,7 +49,6 @@ def check_chars(arr):
 # check iterations
 def check_iterations(arr):
 	iter = 0
-	print(arr)
 	for word in arr:
 		if iter == 0 or iter % 2 == 0:
 			if not is_digit(word):
@@ -64,11 +60,6 @@ def check_iterations(arr):
 	return "true"
 
 
-# check variables
-def check_variables():
-	print("")
-
-
 def f_parser(args):
 	check = check_chars(args.polynomial)
 	if check != "true":
@@ -78,5 +69,4 @@ def f_parser(args):
 	if check != "true":
 		return check
 
-	print("parser\n")
 	return "true"

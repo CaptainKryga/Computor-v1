@@ -1,7 +1,7 @@
 import argparse
 
 from algoritm import f_algoritm
-from get import f_get_data
+from get import f_get_data, f_get_polynomial_degree
 from parser import f_parser
 
 # Press the green button in the gutter to run the script.
@@ -15,7 +15,6 @@ if __name__ == '__main__':
 	args = parser.parse_args()
 	arr = f_parser(args)
 	if arr == "true":
-		print(f_get_data(args))
-		print(f_algoritm(arr))
+		f_algoritm(args)
 	else:
 		print("error polynomial: ", str(arr))
