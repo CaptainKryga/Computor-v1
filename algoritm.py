@@ -24,10 +24,38 @@ def parser_v3(pre_list):
 	list = []
 	for l in pre_list:
 		temp = str.split(l, ' ')
-		if temp.count('') > 0:
+		i = temp.count('')
+		while i > 0:
+			i -= 1
 			temp.remove('')
 		list.append(temp)
 	return list
+
+
+def start_sort(list):
+	resS = []
+	resE = []
+	resC = []
+	equals = False
+	for i in list:
+		if len(i) == 1:
+			resC.append(i)
+			equals = True
+		elif 2 >= len(i) > 1:
+			if equals:
+				resS.insert(0, i)
+			else:
+				if equals:
+					resS.append(i)
+				else:
+					resE.append(i)
+		else:
+			if equals:
+				resE.append(i)
+			else:
+				resS.append(i)
+
+	return resS + resC + resE
 
 
 def f_algoritm(args):
@@ -36,8 +64,9 @@ def f_algoritm(args):
 
 	pre_list = parser_v2(args)
 	list = parser_v3(pre_list)
+	res = start_sort(list)
 
-	print(list)
+	print(res)
 
 	equals = False
 	for c in arr:
@@ -46,6 +75,5 @@ def f_algoritm(args):
 			equals = True
 		elif is_digit2(c):
 			float(c)
-
 
 	print("Polynomial degree: " + str(f_get_polynomial_degree(args)))

@@ -20,10 +20,7 @@ def is_digit2(num):
 def is_digit(s):
 	if s[0] == 'x' or s[0] == 'X':
 		if len(s) > 2 and s[1] == '^':
-			if is_digit2(str.split(s, '^')[1]) and \
-				float(str.split(s, '^')[1]) == 0 or \
-				float(str.split(s, '^')[1]) == 1 or \
-				float(str.split(s, '^')[1]) == 2:
+			if is_digit2(str.split(s, '^')[1]):
 				return True
 	elif is_digit2(s):
 		return True
