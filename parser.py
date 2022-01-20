@@ -1,8 +1,8 @@
 def is_digit2(num):
 	check = "0123456789"
 	tchk = True
-	if num[0] == '-':
-		num = num[1:]
+	# if num[0] == '-':
+	# 	num = num[1:]
 	for c in num:
 		flag = False
 		for ch in check:
