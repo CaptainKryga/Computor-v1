@@ -1,7 +1,7 @@
 import argparse
 
 from algoritm import f_algoritm
-from get import f_get_data, f_get_polynomial_degree
+from sub import f_get_data, f_get_polynomial_degree
 from parser import f_parser
 
 # Press the green button in the gutter to run the script.
