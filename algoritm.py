@@ -1,3 +1,5 @@
+import collections
+
 from sub import f_get_polynomial_degree, f_print_polynomial, tolerant
 from parser import is_digit2
 
@@ -106,18 +108,47 @@ def sort_nums(res):
 			nums.append(float(i[1]) * tolerant(i[0] == '+', 1, -1))
 
 	num = tolerant(sum(nums) == (int(sum(nums))), int(sum(nums)), sum(nums))
+	if num == 0:
+		return []
 	return [tolerant(num >= 0, '+', '-'), tolerant(num >= 0, num, num * -1)]
+
 
 def sum_abc_and_nums(s1, s2):
 	list = []
+	is_x = False
 	for s in s1:
 		if s[len(s) - 1] == 'x^0':
+			is_x = True
 			f = s2[1]
 			f += s[1]
 			list.append([s[0], f, s[2], s[3]])
 		else:
 			list.append(s)
+	if not is_x and len(s2) > 0:
+		list.append(s2)
 	return list
+
+
+def check_all_sol(list):
+	equals = False
+	l1 = []
+	l2 = []
+	for s in list:
+		if s[0] == '=':
+			equals = True
+		elif equals:
+			l2.append(s)
+		elif not equals:
+			l1.append(s)
+
+	if len(l1) == len(l2):
+		i = len(l1) - 1
+		while i >= 0:
+			if l1[i] != l2[i]:
+				return False
+			i -= 1
+		return True
+	return False
 
 def algoritm_parser(args):
 	# create component's list "- 7 * 3x"
@@ -125,7 +156,10 @@ def algoritm_parser(args):
 
 	# create sub component's list "[-, 7, *, 3x]"
 	list = parser_v3(pre_list)
+	return list
 
+
+def algoritm_sort(list):
 	# first sort elements [x2, x1, x0, =, 100]
 	res = start_sort(list)
 
@@ -137,20 +171,80 @@ def algoritm_parser(args):
 	return res2
 
 
+def get_num_in_x(parser, x):
+	for n in parser:
+		if n[len(n) - 1] == x:
+			return n[1]
+		else:
+			return False
+
+
 # поверка можно ли решить уравнение
 def algoritm_check_discriminant(parser):
-	i = 0
+	a = get_num_in_x(parser, 'x^0')
+
+
+def check_x(parser):
+	res = 0
+	for n in parser:
+		if len(n) == 4:
+			res += 1
+	return res
+
+
+def solution_x0(parser):
+	f = 0
+	for n in parser:
+		if n[0] == '=':
+			break
+		f += float(n[1])
+	if f != 0:
+		return ["false"]
+	return ["no x"]
+
+
+def solution_x1(parser):
+	return ["all"]
+
+
+def solution_x2(parser):
+	x = 2
+	return ['c']
 
 
 def f_algoritm(args):
-	parser = algoritm_parser(args)
-	f_print_polynomial("Reduced form: ", parser)
+	list = algoritm_parser(args)
+	parser = []
+	if not check_all_sol(list):
+		parser = algoritm_sort(list)
+		f_print_polynomial("Reduced form: ", parser)
+	else:
+		f_print_polynomial("Reduced form: ", list)
+		print("Polynomial degree: " + str(f_get_polynomial_degree(args)))
+		print("ANY real number is a solution")
+		return
 
 	degree = f_get_polynomial_degree(args)
 	print("Polynomial degree: " + str(degree))
 	if degree > 2:
-		print("The polynomial degree is strictly greater than 2, I can't solve.")
+		print("The polynomial degree is strictly greater than 2, I CAN'T solve.")
 		return
+
+	check = check_x(parser)
+	sol = []
+	if check == 0:
+		sol = solution_x0(parser)
+	elif check == 1:
+		sol = solution_x1(parser)
+	elif check == 2:
+		sol = solution_x2(parser)
+
+	if sol[0] == 'false':
+		print("The equation has no solution because it was built INCORRECTLY")
+	elif sol[0] == 'no x':
+		print("The equation has no UNKNOWN value")
+	elif sol[0] == 'all':
+		print()
 
 	algoritm_check_discriminant(parser)
 
