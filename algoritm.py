@@ -143,7 +143,7 @@ def sum_abc_and_nums(s1, s2):
 		else:
 			list.append(s)
 	if not is_x:
-		list.append([s2[0], s2[1], '*', 'x^0'])
+		list.insert(0, [s2[0], s2[1], '*', 'x^0'])
 	return list
 
 
@@ -235,6 +235,11 @@ def solution_x2(parser):
 	return ['c']
 
 
+def solution_x3(parser):
+	x = 2
+	return ['c']
+
+
 def f_algoritm(args):
 	list = algoritm_parser(args)
 	if not check_structure_x(list):
@@ -265,6 +270,8 @@ def f_algoritm(args):
 		sol = solution_x1(parser)
 	elif check == 2:
 		sol = solution_x2(parser)
+	elif check == 3:
+		sol = solution_x3(parser)
 
 	if sol[0] == 'false':
 		print("The equation has no solution because it was built INCORRECTLY")

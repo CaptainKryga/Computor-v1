@@ -6,7 +6,8 @@ def f_get_polynomial_degree(list):
 	res = 0
 	for l in list:
 		if len(l) > 2 and (l[len(l) - 1][0] == 'x' or l[len(l) - 1][0] == 'X'):
-			res = int(l[len(l) - 1][2:])
+			temp = int(l[len(l) - 1][2:])
+			res = tolerant(temp > res, temp, res)
 	return res
 
 def f_print_polynomial(start, src):
