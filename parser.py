@@ -52,12 +52,22 @@ def check_chars(arr):
 def check_iterations(arr):
 	iter = 0
 	is_num = False
+	equals = False
 	if arr[0] == '-':
 		is_num = True
 	for word in arr:
+		if equals:
+			if word == '+' or word == '-' or word == '*' or word == '=':
+				is_num = True
+			else:
+				is_num = False
+			equals = False
+
 		if is_num:
-			if word != '+' and word != '-' and word != '*' and word != '/' and word != '=':
+			if word != '+' and word != '-' and word != '*' and word != '=':
 				return word
+			elif word == '=':
+				equals = True
 			is_num = False
 		else:
 			if not is_digit(word):

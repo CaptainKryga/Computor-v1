@@ -35,6 +35,14 @@ def parser_v3(pre_list):
 	return list
 
 
+def check_structure_x(list):
+	for l in list:
+		for s in l:
+			if s[0] == 'x' and len(l) <= 2:
+				return False
+	return True
+
+
 def start_sort(list):
 	resS = []
 	resE = []
@@ -55,10 +63,13 @@ def start_sort(list):
 				else:
 					resS.insert(0, i)
 		elif len(i) == 3:
-			i.insert(0, '+')
+			i.insert(0, tolerant(equals, '-', '+'))
 			resS.append(i)
 		else:
-			resS.append(i)
+			if equals:
+				resS.append([tolerant(i[0] == '+', '-', '+'), i[1], i[2], i[3]])
+			else:
+				resS.append(i)
 
 	return resS + resC + resE
 
@@ -214,6 +225,10 @@ def solution_x2(parser):
 
 def f_algoritm(args):
 	list = algoritm_parser(args)
+	if not check_structure_x(list):
+		print("Error parse: X has no coefficient")
+		return
+
 	parser = []
 	if not check_all_sol(list):
 		parser = algoritm_sort(list)

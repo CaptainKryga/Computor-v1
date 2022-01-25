@@ -17,4 +17,4 @@ if __name__ == '__main__':
 	if arr == "true":
 		f_algoritm(args)
 	else:
-		print("error polynomial: ", str(arr))
+		print("Error parse: symbol ", str(arr))
