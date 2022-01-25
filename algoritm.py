@@ -48,7 +48,10 @@ def start_sort(list):
 				resE.insert(0, i)
 		elif len(i) == 2:
 			if i[1] != '0':
-				resS.insert(0, i)
+				if equals:
+					resS.append([tolerant(i[0] == '+', '-', '+'), i[1]])
+				else:
+					resS.insert(0, i)
 		elif len(i) == 3:
 			i.insert(0, '+')
 			resS.append(i)
@@ -105,20 +108,32 @@ def sort_nums(res):
 	num = tolerant(sum(nums) == (int(sum(nums))), int(sum(nums)), sum(nums))
 	return [tolerant(num >= 0, '+', '-'), tolerant(num >= 0, num, num * -1)]
 
+def sum_abc_and_nums(s1, s2):
+	list = []
+	for s in s1:
+		if s[len(s) - 1] == 'x^0':
+			f = s2[1]
+			f += s[1]
+			list.append([s[0], f, s[2], s[3]])
+		else:
+			list.append(s)
+	return list
 
 def algoritm_parser(args):
 	# create component's list "- 7 * 3x"
 	pre_list = parser_v2(args)
+
 	# create sub component's list "[-, 7, *, 3x]"
 	list = parser_v3(pre_list)
+
 	# first sort elements [x2, x1, x0, =, 100]
 	res = start_sort(list)
+
 	# sum sort elements [x2, x1, x0, =, 100]
-	res2 = sort_abc(res)
-
-	# res2
-
-	res2 += sort_nums(res), ['='], ['+', '0']
+	s1 = sort_abc(res)
+	s2 = sort_nums(res)
+	res2 = sum_abc_and_nums(s1, s2)
+	res2 += ['='], ['+', '0']
 	return res2
 
 
