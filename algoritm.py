@@ -288,9 +288,20 @@ def get_discriminant(a, b, c):
 	D = b * b - 4 * a * c
 
 	if D < 0:
-		return ['d0']
+		x1 = -b / (2 * a)
+		i1 = math.sqrt(D * -1) / (2 * a)
+		x2 = -b / (2 * a)
+		i2 = -math.sqrt(D * -1) / (2 * a)
+
+		i1 = int(i1 * 100) / 100
+		i2 = int(i2 * 100) / 100
+
+		res1 = str(x1) + ' ' + tolerant(i1 >= 0, '+', '-') + ' ' + tolerant(i1 >= 0, str(i1), str(i1 * -1)) + ' * i'
+		res2 = str(x2) + ' ' + tolerant(i2 >= 0, '+', '-') + ' ' + tolerant(i2 >= 0, str(i2), str(i2 * -1)) + ' * i'
+		return [res1, res2]
 	elif D == 0:
-		return ['d1']
+		x = -b / (2 * a)
+		return [x]
 	else:
 		x1 = (-b + math.sqrt(D)) / (2 * a)
 		x2 = (-b - math.sqrt(D)) / (2 * a)
@@ -353,8 +364,10 @@ def f_algoritm(args):
 		print("The equation has no solution because it was built INCORRECTLY")
 	elif sol[0] == 'no x':
 		print("The equation has no UNKNOWN value")
+	elif sol[0] == 'd0':
+		print("")
 	else:
-		print("The solution is:")
+		print(tolerant(len(sol) > 1, "Discriminant is strictly positive, the two solutions are:", "The solution is:"))
 		for s in sol:
 			print(s)
 
