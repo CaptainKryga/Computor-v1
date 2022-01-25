@@ -11,8 +11,11 @@ if __name__ == '__main__':
 	# parser.add_argument("-s", "--steps", help="all steps mode",
 	# 					action="store_true")
 	args = parser.parse_args()
-	arr = f_parser(args)
-	if arr == "true":
-		f_algoritm(args)
+	if len(args.polynomial) == 0:
+		print("Error parse: empty line ")
 	else:
-		print("Error parse: symbol ", str(arr))
+		arr = f_parser(args)
+		if arr == "true":
+			f_algoritm(args)
+		else:
+			print("Error parse: symbol ", str(arr))
