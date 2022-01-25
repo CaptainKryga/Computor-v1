@@ -1,5 +1,5 @@
 import math
-from sub import f_get_polynomial_degree, f_print_polynomial, tolerant
+from sub import f_get_polynomial_degree, f_print_polynomial, ternary_operator
 
 
 # разбиение уравнения на компоненты типа "+ 2 * x^3"
@@ -82,15 +82,15 @@ def start_sort(list):
 		elif len(i) == 2:
 			if i[1] != '0':
 				if equals:
-					resS.append([tolerant(i[0] == '+', '-', '+'), i[1]])
+					resS.append([ternary_operator(i[0] == '+', '-', '+'), i[1]])
 				else:
 					resS.insert(0, i)
 		elif len(i) == 3:
-			i.insert(0, tolerant(equals, '-', '+'))
+			i.insert(0, ternary_operator(equals, '-', '+'))
 			resS.append(i)
 		else:
 			if equals:
-				resS.append([tolerant(i[0] == '+', '-', '+'), i[1], i[2], i[3]])
+				resS.append([ternary_operator(i[0] == '+', '-', '+'), i[1], i[2], i[3]])
 			else:
 				resS.append(i)
 
@@ -131,13 +131,13 @@ def summary_components(res, str):
 
 	nums = []
 	for t in temp:
-		nums.append(float(t[1]) * tolerant(t[0] == '+', 1, -1))
+		nums.append(float(t[1]) * ternary_operator(t[0] == '+', 1, -1))
 
-	num = tolerant(sum(nums) == (int(sum(nums))), int(sum(nums)), sum(nums))
+	num = ternary_operator(sum(nums) == (int(sum(nums))), int(sum(nums)), sum(nums))
 	if num == 0:
 		return ["Null"]
 
-	return [tolerant(num >= 0, '+', '-'), tolerant(num >= 0, num, num * -1), '*', str]
+	return [ternary_operator(num >= 0, '+', '-'), ternary_operator(num >= 0, num, num * -1), '*', str]
 
 
 # суммирование всех чисел без и с x^0
@@ -145,12 +145,12 @@ def sort_nums(res):
 	nums = []
 	for i in res:
 		if len(i) == 2:
-			nums.append(float(i[1]) * tolerant(i[0] == '+', 1, -1))
+			nums.append(float(i[1]) * ternary_operator(i[0] == '+', 1, -1))
 
-	num = tolerant(sum(nums) == (int(sum(nums))), int(sum(nums)), sum(nums))
+	num = ternary_operator(sum(nums) == (int(sum(nums))), int(sum(nums)), sum(nums))
 	if num == 0:
 		return []
-	return [tolerant(num >= 0, '+', '-'), tolerant(num >= 0, num, num * -1)]
+	return [ternary_operator(num >= 0, '+', '-'), ternary_operator(num >= 0, num, num * -1)]
 
 
 # объединение буквенных компонентов и чисел
@@ -268,7 +268,7 @@ def get_num_solution(p):
 	if len(p) == 3:
 		num = float(p[0])
 	else:
-		num = tolerant(p[0] == '+', float(p[1]), float(p[1]) * -1)
+		num = ternary_operator(p[0] == '+', float(p[1]), float(p[1]) * -1)
 	return num
 
 
@@ -314,8 +314,10 @@ def get_discriminant(a, b, c):
 		i1 = int(i1 * 100) / 100
 		i2 = int(i2 * 100) / 100
 
-		res1 = str(x1) + ' ' + tolerant(i1 >= 0, '+', '-') + ' ' + tolerant(i1 >= 0, str(i1), str(i1 * -1)) + ' * i'
-		res2 = str(x2) + ' ' + tolerant(i2 >= 0, '+', '-') + ' ' + tolerant(i2 >= 0, str(i2), str(i2 * -1)) + ' * i'
+		res1 = str(x1) + ' ' + ternary_operator(i1 >= 0, '+', '-') + ' ' + \
+			ternary_operator(i1 >= 0, str(i1), str(i1 * -1)) + ' * i'
+		res2 = str(x2) + ' ' + ternary_operator(i2 >= 0, '+', '-') + ' ' + \
+			ternary_operator(i2 >= 0, str(i2), str(i2 * -1)) + ' * i'
 		resString += "< 0, there are 2 solutions(a + b * i): "
 		return [resString, res1, res2]
 	elif D == 0:

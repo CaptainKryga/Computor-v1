@@ -4,7 +4,7 @@ def f_get_polynomial_degree(list):
 	for l in list:
 		if len(l) > 2 and (l[len(l) - 1][0] == 'x' or l[len(l) - 1][0] == 'X'):
 			temp = int(l[len(l) - 1][2:])
-			res = tolerant(temp > res, temp, res)
+			res = ternary_operator(temp > res, temp, res)
 	return res
 
 
@@ -15,7 +15,7 @@ def f_print_polynomial(start, src):
 	res = ""
 	for s in src:
 		if first or equals:
-			x = tolerant(s[0] == '+', s[1:], s)
+			x = ternary_operator(s[0] == '+', s[1:], s)
 
 			for c in x:
 				res += str(c) + ' '
@@ -33,7 +33,7 @@ def f_print_polynomial(start, src):
 
 
 # тернарное выражение
-def tolerant(check, ret1, ret2):
+def ternary_operator(check, ret1, ret2):
 	if check:
 		return ret1
 	return ret2
