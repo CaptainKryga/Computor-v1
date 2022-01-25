@@ -1,7 +1,4 @@
-def f_get_data(args):
-	return str.split(args.polynomial, ' ')
-
-
+# получение степени уравнения
 def f_get_polynomial_degree(list):
 	res = 0
 	for l in list:
@@ -10,6 +7,8 @@ def f_get_polynomial_degree(list):
 			res = tolerant(temp > res, temp, res)
 	return res
 
+
+# принт уравнения из листа компонентов
 def f_print_polynomial(start, src):
 	first = True
 	equals = False
@@ -32,6 +31,8 @@ def f_print_polynomial(start, src):
 				res += str(c) + ' '
 	print(start + res[:-1])
 
+
+# тернарное выражение
 def tolerant(check, ret1, ret2):
 	if check:
 		return ret1
