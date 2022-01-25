@@ -262,6 +262,26 @@ def solution_x0(parser):
 
 # решение с одним x^
 def solution_x1(parser):
+	c = 0
+	b = 0
+	a = 0
+	flag_c = False
+	flag_b = False
+	for p in parser:
+		if len(p) > 2 and p[len(p) - 1][2] == '0':
+			c = get_num_solution(p)
+			flag_c = True
+		if len(p) > 2 and p[len(p) - 1][2] == '1':
+			b = get_num_solution(p)
+			flag_b = True
+		if len(p) > 2 and p[len(p) - 1][2] == '2':
+			a = get_num_solution(p)
+
+	if b != 0:
+		return ['The solution is:', '0']
+	elif a != 0:
+		return get_discriminant(a, b, c)
+
 	return ["incorrect"]
 
 
@@ -297,7 +317,7 @@ def solution_x2(parser):
 
 	if flag_c and flag_b:
 		x = int(c / b * 100) / 100
-		return [x]
+		return ['The solution is:', x]
 
 	return get_discriminant(a, b, c)
 

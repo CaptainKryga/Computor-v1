@@ -33,7 +33,7 @@ def sqrt_custom(num):
 		if i > 100000:
 			break
 
-	return sub
+	return int(sub * 100) / 100
 
 
 if __name__ == '__main__':
