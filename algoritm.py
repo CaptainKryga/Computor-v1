@@ -48,6 +48,7 @@ def check_structure_x(list):
 		if l[0] == '=':
 			if not equals:
 				equals = True
+				continue
 			else:
 				return 'missing \'=\''
 
