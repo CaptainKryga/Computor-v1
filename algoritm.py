@@ -1,4 +1,5 @@
 import collections
+import math
 
 from sub import f_get_polynomial_degree, f_print_polynomial, tolerant
 from parser import is_digit2
@@ -174,7 +175,21 @@ def algoritm_parser(args):
 
 	# create sub component's list "[-, 7, *, 3x]"
 	list = parser_v3(pre_list)
-	return list
+
+	# добавление x^0 всем значениям буз него
+	list2 = []
+	for c in list:
+		if c[0] != '=' and len(c) <= 2:
+			c2 = []
+			c2.append(c[0])
+			if len(c) > 1:
+				c2.append(c[1])
+			c2.append('*')
+			c2.append('x^0')
+			list2.append(c2)
+		else:
+			list2.append(c)
+	return list2
 
 
 def algoritm_sort(list):
@@ -215,6 +230,7 @@ def check_x(parser):
 	return res
 
 
+# решение без x^
 def solution_x0(parser):
 	f = 0
 	for n in parser:
@@ -226,18 +242,78 @@ def solution_x0(parser):
 	return ["no x"]
 
 
+# решение с одним x^
 def solution_x1(parser):
-	return ["all"]
+	return ["false"]
 
 
+def get_num_solution(p):
+	num = 0
+	if len(p) == 3:
+		num = float(p[0])
+	else:
+		num = tolerant(p[0] == '+', float(p[1]), float(p[1]) * -1)
+	return num
+
+
+# решение с двумя x^
+# ax + b = 0
+# ax = - b
+# x = - b / a
+# x^2 под корень
 def solution_x2(parser):
-	x = 2
-	return ['c']
+	c = 0
+	b = 0
+	a = 0
+	flag_c = False
+	flag_b = False
+	for p in parser:
+		if len(p) > 2 and p[len(p) - 1][2] == '0':
+			c = get_num_solution(p)
+			flag_c = True
+		if len(p) > 2 and p[len(p) - 1][2] == '1':
+			b = get_num_solution(p)
+			flag_b = True
+		if len(p) > 2 and p[len(p) - 1][2] == '2':
+			a = get_num_solution(p)
+
+	if flag_c and flag_b:
+		x = int(c / b * 100) / 100
+		return [x]
+
+	return get_discriminant(a, b, c)
 
 
+def get_discriminant(a, b, c):
+	D = b * b - 4 * a * c
+
+	if D < 0:
+		return ['d0']
+	elif D == 0:
+		return ['d1']
+	else:
+		x1 = (-b + math.sqrt(D)) / (2 * a)
+		x2 = (-b - math.sqrt(D)) / (2 * a)
+
+		x1 = int(x1 * 100) / 100
+		x2 = int(x2 * 100) / 100
+		return [x1, x2]
+
+
+# решение с тремя x^
 def solution_x3(parser):
-	x = 2
-	return ['c']
+	c = 0
+	b = 0
+	a = 0
+	for p in parser:
+		if len(p) > 2 and p[len(p) - 1][2] == '0':
+			c = get_num_solution(p)
+		if len(p) > 2 and p[len(p) - 1][2] == '1':
+			b = get_num_solution(p)
+		if len(p) > 2 and p[len(p) - 1][2] == '2':
+			a = get_num_solution(p)
+
+	return get_discriminant(a, b, c)
 
 
 def f_algoritm(args):
@@ -252,7 +328,7 @@ def f_algoritm(args):
 		f_print_polynomial("Reduced form: ", parser)
 	else:
 		f_print_polynomial("Reduced form: ", list)
-		print("Polynomial degree: " + str(f_get_polynomial_degree(args)))
+		print("Polynomial degree: " + str(f_get_polynomial_degree(list)))
 		print("ANY real number is a solution")
 		return
 
@@ -277,8 +353,10 @@ def f_algoritm(args):
 		print("The equation has no solution because it was built INCORRECTLY")
 	elif sol[0] == 'no x':
 		print("The equation has no UNKNOWN value")
-	elif sol[0] == 'all':
-		print()
+	else:
+		print("The solution is:")
+		for s in sol:
+			print(s)
 
 	algoritm_check_discriminant(parser)
 
