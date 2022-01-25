@@ -15,11 +15,23 @@ def is_digit2(num):
 			return False
 	return True
 
+def is_digit3(num):
+	check = "0123456789"
+	for c in num:
+		flag = False
+		for ch in check:
+			if c == ch:
+				flag = True
+
+		if not flag:
+			return False
+	return True
+
 # pre check num, check x^
 def is_digit(s):
 	if s[0] == 'x' or s[0] == 'X':
 		if len(s) > 2 and s[1] == '^':
-			if is_digit2(str.split(s, '^')[1]):
+			if is_digit3(str.split(s, '^')[1]):
 				return True
 	elif is_digit2(s):
 		return True

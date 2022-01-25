@@ -7,7 +7,8 @@ from parser import is_digit2
 def parser_v2(args):
 	sr = ""
 	list = []
-	for s in args.polynomial:
+	polynomial = args.polynomial.lower()
+	for s in polynomial:
 		if s == '-' or s == '+' or s == '=':
 			list.append(sr)
 			sr = ""
@@ -142,7 +143,7 @@ def sum_abc_and_nums(s1, s2):
 		else:
 			list.append(s)
 	if not is_x:
-		list.append(s2)
+		list.append([s2[0], s2[1], '*', 'x^0'])
 	return list
 
 
@@ -250,7 +251,7 @@ def f_algoritm(args):
 		print("ANY real number is a solution")
 		return
 
-	degree = f_get_polynomial_degree(args)
+	degree = f_get_polynomial_degree(parser)
 	print("Polynomial degree: " + str(degree))
 	if degree > 2:
 		print("The polynomial degree is strictly greater than 2, I CAN'T solve.")

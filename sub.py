@@ -2,14 +2,11 @@ def f_get_data(args):
 	return str.split(args.polynomial, ' ')
 
 
-def f_get_polynomial_degree(args):
+def f_get_polynomial_degree(list):
 	res = 0
-	arr = str.split(args.polynomial, ' ')
-	for s in arr:
-		if len(str.split(s, '^')) > 1:
-			temp = int(str.split(s, '^')[1])
-			if res < temp:
-				res = temp
+	for l in list:
+		if len(l) > 2 and (l[len(l) - 1][0] == 'x' or l[len(l) - 1][0] == 'X'):
+			res = int(l[len(l) - 1][2:])
 	return res
 
 def f_print_polynomial(start, src):
