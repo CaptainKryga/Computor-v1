@@ -65,12 +65,17 @@ def check_iterations(arr):
 	iter = 0
 	is_num = False
 	equals = False
+	check_now = ''
+	check_old = ''
 	if arr[0] == '-':
 		is_num = True
 	for word in arr:
+		check_now = word
 		if equals:
-			if word == '+' or word == '-' or word == '*' or word == '=':
+			if word == '+' or word == '-':
 				is_num = True
+			elif word == '*' or word == '=':
+				return word
 			else:
 				is_num = False
 			equals = False
@@ -84,14 +89,19 @@ def check_iterations(arr):
 		else:
 			if not is_digit(word):
 				return word
+			if word[0] == 'x' and check_old != '*':
+				return word
+			elif word[0] != 'x' and check_old == '*':
+				return check_old
 			is_num = True
 		iter += 1
-
+		check_old = check_now
 	return "true"
 
 
 def f_parser(args):
-	check = check_chars(args.polynomial)
+	polynomial = args.polynomial.lower()
+	check = check_chars(polynomial)
 	if check != "true":
 		return check
 
