@@ -93,7 +93,10 @@ def sort_abc(res):
 	# sum values on check
 	res2 = []
 	for c in check:
-		res2.append(algos(res, c))
+		r = algos(res, c)
+		if r[0] != 'Null':
+			res2.append(r)
+
 	return res2
 
 
@@ -108,6 +111,9 @@ def algos(res, str):
 		nums.append(float(t[1]) * tolerant(t[0] == '+', 1, -1))
 
 	num = tolerant(sum(nums) == (int(sum(nums))), int(sum(nums)), sum(nums))
+	if num == 0:
+		return ["Null"]
+
 	return [tolerant(num >= 0, '+', '-'), tolerant(num >= 0, num, num * -1), '*', str]
 
 
@@ -135,7 +141,7 @@ def sum_abc_and_nums(s1, s2):
 			list.append([s[0], f, s[2], s[3]])
 		else:
 			list.append(s)
-	if not is_x and len(s2) > 0:
+	if not is_x:
 		list.append(s2)
 	return list
 
@@ -177,7 +183,12 @@ def algoritm_sort(list):
 	# sum sort elements [x2, x1, x0, =, 100]
 	s1 = sort_abc(res)
 	s2 = sort_nums(res)
-	res2 = sum_abc_and_nums(s1, s2)
+
+	res2 = []
+	if len(s2) < 2:
+		res2 = s1
+	else:
+		res2 = sum_abc_and_nums(s1, s2)
 	res2 += ['='], ['+', '0']
 	return res2
 
