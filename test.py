@@ -1,31 +1,24 @@
 import argparse
 
-from algoritm import f_algoritm
-from parser import f_parser
 from sub import ternary_operator
 
 
 def mabs(x):
 	return ternary_operator(x < 0, -x, x)
 
-
-if __name__ == '__main__':
-	parser = argparse.ArgumentParser()
-	parser.add_argument('s', type=str, help="s square")
-	args = parser.parse_args()
-
-	num = float(args.s)
+def sqrt_custom(num):
 	sub = num / 4
 	koof = 0.001
-	k2 = 10
 	i = 1
 	_max = -999999999
 	_min = 999999999
 	while True:
 		res = sub * sub
-		print(int(sub * 1000)/1000, "|", int(res * 1000)/1000, "|", i, "[", int(_min * 100)/100, "|", int(_max * 100)/100, "]")
+		# print(int(sub * 1000) / 1000, "|", int(res * 1000) / 1000, "|", i, "[", int(_min * 100) / 100, "|",
+		# 	  int(_max * 100) / 100, "]")
 		if res - koof < num < res + koof:
 			break
+
 		if res > num:
 			_min = ternary_operator(sub < _min, sub, _min)
 			sub -= sub / 10
@@ -39,6 +32,18 @@ if __name__ == '__main__':
 		i += 1
 		if i > 100000:
 			break
+
+	return sub
+
+
+if __name__ == '__main__':
+	parser = argparse.ArgumentParser()
+	parser.add_argument('s', type=str, help="s square")
+	args = parser.parse_args()
+
+	sqrt_custom(float(args.s))
+
+
 
 
 

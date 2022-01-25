@@ -1,8 +1,10 @@
-import math
 from sub import f_get_polynomial_degree, f_print_polynomial, ternary_operator
 
 
 # разбиение уравнения на компоненты типа "+ 2 * x^3"
+from test import sqrt_custom
+
+
 def parser_v2(args):
 	sr = ""
 	list = []
@@ -254,12 +256,12 @@ def solution_x0(parser):
 		f += float(n[1])
 	if f != 0:
 		return ["incorrect"]
-	return ["no x"]
+	return ["incorrect"]
 
 
 # решение с одним x^
 def solution_x1(parser):
-	return ["false"]
+	return ["incorrect"]
 
 
 # поиск коофициента компонента
@@ -306,10 +308,12 @@ def get_discriminant(a, b, c):
 	resString = "Discriminant "
 
 	if D < 0:
+		sqrt = sqrt_custom(D * -1)
+
 		x1 = -b / (2 * a)
-		i1 = math.sqrt(D * -1) / (2 * a)
+		i1 = -sqrt / (2 * a)
 		x2 = -b / (2 * a)
-		i2 = -math.sqrt(D * -1) / (2 * a)
+		i2 = sqrt / (2 * a)
 
 		i1 = int(i1 * 100) / 100
 		i2 = int(i2 * 100) / 100
@@ -325,8 +329,10 @@ def get_discriminant(a, b, c):
 		resString += "== 0, there are 1 solution: "
 		return [resString, x]
 	else:
-		x1 = (-b + math.sqrt(D)) / (2 * a)
-		x2 = (-b - math.sqrt(D)) / (2 * a)
+		sqrt = sqrt_custom(D)
+
+		x1 = (-b - sqrt) / (2 * a)
+		x2 = (-b + sqrt) / (2 * a)
 
 		x1 = int(x1 * 100) / 100
 		x2 = int(x2 * 100) / 100
