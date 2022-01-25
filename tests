@@ -9,3 +9,25 @@ x = z
 "3.2 * x^2 - 5 + 10 * x^1 - 5 * x^0 - 8 * x^1 = 0 - 3 * x^1 - 4"
 "3.2 * x^2 - 5 + 10 * x^1 - 5 * x^0 - 8 * x^1 = - 0 - 3 * x^1 - 4"
 "1 * x^1 = 2 * x^1"
+
+"1"
+"x^0"
+
+5 * X^0 = 4 * X^0 + 0 * X^1
+5 * X^0 = 4 * X^0 - 2 * X^1
+5 * X^0 = 4 * X^0 + 7.5 * X^1
+5 * X^1 = 5 * Y^1
+
+anySolution: 5 * X^1 = 5 * X^1
+noSolution: 0 * X^1 = 5 * X^0
+noSolution2: 5 * X^0 = 0 * X^0
+
+zeroDegree: 5 * X^0 = 5 * X^0
+zeroDegree2: 4 * X^0 = 8 * X^0
+firstDegree: 5 * X^0 = 4 * X^0 + 7 * X^1
+
+secondDegreePositiveDiscriminant: 5 * X^0 + 13 * X^1 + 3 * X^2 = 1 * X^0 + 1 * X^1
+secondDegreeZeroDiscriminant: 6 * X^0 + 11 * X^1 + 5 * X^2 = 1 * X^0 + 1 * X^1
+secondDegreeNegativeDiscriminant: 5 * x^0 + 3 * x^1 + 3 * x^2 = 1 * x^0 + 0 * x^1
+
+thirdDegree: 5 * X^0 + 13 * X^1 + 3 * X^3 = 1 * X^0 + 1 * X^1

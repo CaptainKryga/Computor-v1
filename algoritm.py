@@ -1,10 +1,8 @@
-import collections
 import math
-
 from sub import f_get_polynomial_degree, f_print_polynomial, tolerant
-from parser import is_digit2
 
 
+# разбиение уравнения на компоненты типа "+ 2 * x^3"
 def parser_v2(args):
 	sr = ""
 	list = []
@@ -24,6 +22,7 @@ def parser_v2(args):
 	return list
 
 
+# более детальное разбиение уравнения на подкомпоненты типа ['+', '2', '*', 'x^3']
 def parser_v3(pre_list):
 	list = []
 	for l in pre_list:
@@ -37,14 +36,36 @@ def parser_v3(pre_list):
 	return list
 
 
+# проверка целостности уравнения
 def check_structure_x(list):
+	# проверка количества элементов с правой стороны от равно и слевой
+	l1 = []
+	l2 = []
+	equals = False
+	for l in list:
+		if l[0] == '=':
+			if not equals:
+				equals = True
+			else:
+				return 'missing \'=\''
+
+		if equals:
+			l2.append(l)
+		else:
+			l1.append(l)
+
+	if not equals or len(l1) <= 0 or len(l2) <= 0:
+		return 'wrong equation'
+
+	# если х без коофициента
 	for l in list:
 		for s in l:
 			if s[0] == 'x' and len(l) <= 2:
-				return False
-	return True
+				return 'missing coefficient'
+	return 'true'
 
 
+# стартовая сортировка уравнения относительно '='
 def start_sort(list):
 	resS = []
 	resE = []
@@ -76,8 +97,9 @@ def start_sort(list):
 	return resS + resC + resE
 
 
+# стартовая сортировка уравнения относительно '='
 def sort_abc(res):
-	# find all different values
+	# выборка комнопентов типа "x^n"
 	check = []
 	for i in res:
 		if len(i) == 4:
@@ -88,21 +110,20 @@ def sort_abc(res):
 			if flag:
 				check.append(i[len(i) - 1])
 
-	# destroy duplicate's
 	check.sort()
-	# check.reverse()
 
-	# sum values on check
+	# суммирование компонентов если есть похожие
 	res2 = []
 	for c in check:
-		r = algos(res, c)
+		r = summary_components(res, c)
 		if r[0] != 'Null':
 			res2.append(r)
 
 	return res2
 
 
-def algos(res, str):
+# суммирование коофициентов
+def summary_components(res, str):
 	temp = []
 	for r in res:
 		if str == r[len(r) - 1]:
@@ -119,8 +140,8 @@ def algos(res, str):
 	return [tolerant(num >= 0, '+', '-'), tolerant(num >= 0, num, num * -1), '*', str]
 
 
+# суммирование всех чисел без и с x^0
 def sort_nums(res):
-	# find all different values
 	nums = []
 	for i in res:
 		if len(i) == 2:
@@ -132,6 +153,7 @@ def sort_nums(res):
 	return [tolerant(num >= 0, '+', '-'), tolerant(num >= 0, num, num * -1)]
 
 
+# объединение буквенных компонентов и чисел
 def sum_abc_and_nums(s1, s2):
 	list = []
 	is_x = False
@@ -148,6 +170,7 @@ def sum_abc_and_nums(s1, s2):
 	return list
 
 
+# разбиение компонентов уравнения для сравнения между '='
 def check_all_sol(list):
 	equals = False
 	l1 = []
@@ -169,14 +192,16 @@ def check_all_sol(list):
 		return True
 	return False
 
+
+# доп проверки и строки в уравнение для дальнейших расчётов
 def algoritm_parser(args):
-	# create component's list "- 7 * 3x"
+	# создание компонентов "- 7 * 3x"
 	pre_list = parser_v2(args)
 
-	# create sub component's list "[-, 7, *, 3x]"
+	# создания листа подкомпонентов "[-, 7, *, 3x]"
 	list = parser_v3(pre_list)
 
-	# добавление x^0 всем значениям буз него
+	# добавление x^0 всем значениям без него
 	list2 = []
 	for c in list:
 		if c[0] != '=' and len(c) <= 2:
@@ -192,14 +217,16 @@ def algoritm_parser(args):
 	return list2
 
 
+# сортировки и пересборки
 def algoritm_sort(list):
-	# first sort elements [x2, x1, x0, =, 100]
+	# сортировка [x2, x1, x0, =, 100]
 	res = start_sort(list)
 
-	# sum sort elements [x2, x1, x0, =, 100]
+	# сортировка численных и буквенных элементов
 	s1 = sort_abc(res)
 	s2 = sort_nums(res)
 
+	# объединение
 	res2 = []
 	if len(s2) < 2:
 		res2 = s1
@@ -209,19 +236,7 @@ def algoritm_sort(list):
 	return res2
 
 
-def get_num_in_x(parser, x):
-	for n in parser:
-		if n[len(n) - 1] == x:
-			return n[1]
-		else:
-			return False
-
-
-# поверка можно ли решить уравнение
-def algoritm_check_discriminant(parser):
-	a = get_num_in_x(parser, 'x^0')
-
-
+# проверка сколько разных степеней в уравнении
 def check_x(parser):
 	res = 0
 	for n in parser:
@@ -238,7 +253,7 @@ def solution_x0(parser):
 			break
 		f += float(n[1])
 	if f != 0:
-		return ["false"]
+		return ["incorrect"]
 	return ["no x"]
 
 
@@ -247,6 +262,7 @@ def solution_x1(parser):
 	return ["false"]
 
 
+# поиск коофициента компонента
 def get_num_solution(p):
 	num = 0
 	if len(p) == 3:
@@ -260,7 +276,6 @@ def get_num_solution(p):
 # ax + b = 0
 # ax = - b
 # x = - b / a
-# x^2 под корень
 def solution_x2(parser):
 	c = 0
 	b = 0
@@ -284,8 +299,11 @@ def solution_x2(parser):
 	return get_discriminant(a, b, c)
 
 
+# вычисление по дискриминанту
 def get_discriminant(a, b, c):
 	D = b * b - 4 * a * c
+
+	resString = "Discriminant "
 
 	if D < 0:
 		x1 = -b / (2 * a)
@@ -298,17 +316,20 @@ def get_discriminant(a, b, c):
 
 		res1 = str(x1) + ' ' + tolerant(i1 >= 0, '+', '-') + ' ' + tolerant(i1 >= 0, str(i1), str(i1 * -1)) + ' * i'
 		res2 = str(x2) + ' ' + tolerant(i2 >= 0, '+', '-') + ' ' + tolerant(i2 >= 0, str(i2), str(i2 * -1)) + ' * i'
-		return [res1, res2]
+		resString += "< 0, there are 2 solutions(a + b * i): "
+		return [resString, res1, res2]
 	elif D == 0:
 		x = -b / (2 * a)
-		return [x]
+		resString += "== 0, there are 1 solution: "
+		return [resString, x]
 	else:
 		x1 = (-b + math.sqrt(D)) / (2 * a)
 		x2 = (-b - math.sqrt(D)) / (2 * a)
 
 		x1 = int(x1 * 100) / 100
 		x2 = int(x2 * 100) / 100
-		return [x1, x2]
+		resString += "> 0, there are 2 solution: "
+		return [resString, x1, x2]
 
 
 # решение с тремя x^
@@ -327,13 +348,16 @@ def solution_x3(parser):
 	return get_discriminant(a, b, c)
 
 
+# основная функция алгоритма
 def f_algoritm(args):
 	list = algoritm_parser(args)
-	if not check_structure_x(list):
-		print("Error parse: X has no coefficient")
+	check = check_structure_x(list)
+	if check != 'true':
+		print("Error parse: " + check)
 		return
 
 	parser = []
+	# проверка на совпаддение двух сторон уравнения
 	if not check_all_sol(list):
 		parser = algoritm_sort(list)
 		f_print_polynomial("Reduced form: ", parser)
@@ -343,12 +367,14 @@ def f_algoritm(args):
 		print("ANY real number is a solution")
 		return
 
+	# получаем степень уравнения
 	degree = f_get_polynomial_degree(parser)
 	print("Polynomial degree: " + str(degree))
 	if degree > 2:
 		print("The polynomial degree is strictly greater than 2, I CAN'T solve.")
 		return
 
+	# решение или фиаско уравнения
 	check = check_x(parser)
 	sol = []
 	if check == 0:
@@ -360,16 +386,11 @@ def f_algoritm(args):
 	elif check == 3:
 		sol = solution_x3(parser)
 
-	if sol[0] == 'false':
+	# финальный вывод
+	if sol[0] == 'incorrect':
 		print("The equation has no solution because it was built INCORRECTLY")
 	elif sol[0] == 'no x':
 		print("The equation has no UNKNOWN value")
-	elif sol[0] == 'd0':
-		print("")
 	else:
-		print(tolerant(len(sol) > 1, "Discriminant is strictly positive, the two solutions are:", "The solution is:"))
 		for s in sol:
 			print(s)
-
-	algoritm_check_discriminant(parser)
-
