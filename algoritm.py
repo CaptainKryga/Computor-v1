@@ -318,7 +318,7 @@ def solution_x2(parser):
 			a = get_num_solution(p)
 
 	if flag_c and flag_b:
-		x = int(c / b * 100) / 100
+		x = int(c * -1 / b * 100) / 100
 		return ['The solution is:', x]
 
 	return get_discriminant(a, b, c)
