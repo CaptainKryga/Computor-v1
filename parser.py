@@ -105,7 +105,7 @@ def f_parser(args):
 	if check != "true":
 		return check
 
-	check = check_iterations(str.split(args.polynomial))
+	check = check_iterations(str.split(args.polynomial.lower()))
 	if check != "true":
 		return check
 

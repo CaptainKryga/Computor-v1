@@ -235,6 +235,8 @@ def algoritm_sort(list):
 		res2 = s1
 	else:
 		res2 = sum_abc_and_nums(s1, s2)
+	if len(res2) == 0:
+		res2.append(['+', '0'])
 	res2 += ['='], ['+', '0']
 	return res2
 
