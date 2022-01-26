@@ -1,10 +1,7 @@
-from sub import f_get_polynomial_degree, f_print_polynomial, ternary_operator
+from sub import f_get_polynomial_degree, f_print_polynomial, ternary_operator, sqrt_custom
 
 
 # разбиение уравнения на компоненты типа "+ 2 * x^3"
-from test import sqrt_custom
-
-
 def parser_v2(args):
 	sr = ""
 	list = []
@@ -263,19 +260,17 @@ def solution_x0(parser):
 
 
 # решение с одним x^
+# b != 0 and c == 0 => always 0
+# a != 0 => find D
 def solution_x1(parser):
 	c = 0
 	b = 0
 	a = 0
-	flag_c = False
-	flag_b = False
 	for p in parser:
 		if len(p) > 2 and p[len(p) - 1][2] == '0':
 			c = get_num_solution(p)
-			flag_c = True
 		if len(p) > 2 and p[len(p) - 1][2] == '1':
 			b = get_num_solution(p)
-			flag_b = True
 		if len(p) > 2 and p[len(p) - 1][2] == '2':
 			a = get_num_solution(p)
 

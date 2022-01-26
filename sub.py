@@ -37,3 +37,35 @@ def ternary_operator(check, ret1, ret2):
 	if check:
 		return ret1
 	return ret2
+
+
+# пародия на sqrt
+def sqrt_custom(num):
+	sub = num / 4
+	koof = 0.001
+	i = 1
+	_max = -999999999
+	_min = 999999999
+	while True:
+		res = sub * sub
+		# print(int(sub * 1000) / 1000, "|", int(res * 1000) / 1000, "|", i, "[", int(_min * 100) / 100, "|",
+		# 	  int(_max * 100) / 100, "]")
+		if res - koof < num < res + koof:
+			break
+
+		if res > num:
+			_min = ternary_operator(sub < _min, sub, _min)
+			sub -= sub / 10
+			while sub > _min:
+				sub -= sub / 250
+		elif res < num:
+			_max = ternary_operator(sub > _max, sub, _max)
+			sub += sub / 10
+			while sub < _max:
+				sub += sub / 250
+		i += 1
+		if i > 10000000:
+			# print("erebor")
+			break
+
+	return int(sub * 100) / 100
